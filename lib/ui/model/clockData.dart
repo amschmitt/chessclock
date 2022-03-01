@@ -1,6 +1,6 @@
 class ClockData {
   final String clockName;
-  final int clockTimeMillis;
+  final int clockTimeSeconds;
 
-  ClockData(this.clockName, this.clockTimeMillis);
+  ClockData(this.clockName, this.clockTimeSeconds);
 }

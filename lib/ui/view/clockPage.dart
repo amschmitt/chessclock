@@ -30,9 +30,9 @@ class _ClockPageState extends State<ClockPage> {
             builder: (context, state) {
               var data = state.data;
               Fimber.i(
-                  "received data over stream: ${data?.clockName}:${data?.clockTimeMillis}");
+                  "received data over stream: ${data?.clockName}:${data?.clockTimeSeconds}");
               var newDataClockName = data?.clockName;
-              var newDataClockValue = data?.clockTimeMillis;
+              var newDataClockValue = data?.clockTimeSeconds;
               if (newDataClockValue != null && newDataClockName != null) {
                 if (newDataClockName == topClockName) {
                   _topClockText = formatClockMillis(newDataClockValue);
@@ -47,7 +47,7 @@ class _ClockPageState extends State<ClockPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   clockCard(true),
-                  Expanded(child: controlPanel()),
+                  Expanded(child: controlPanel(context)),
                   clockCard(false)
                 ],
               ));
@@ -75,7 +75,7 @@ class _ClockPageState extends State<ClockPage> {
                         ),
                       ))))));
 
-  Widget controlPanel() => Container(
+  Widget controlPanel(BuildContext context) => Container(
         alignment: Alignment.center,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -84,9 +84,19 @@ class _ClockPageState extends State<ClockPage> {
               padding: EdgeInsets.symmetric(horizontal: 48.0),
               child: Icon(Icons.settings, size: 40.0),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 48.0),
-              child: Icon(Icons.add, size: 40.0),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 48.0),
+              child: IconButton(
+                icon: const Icon(Icons.list, size: 40.0),
+                onPressed: () => controller.selectTapped(context),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 48.0),
+              child: IconButton(
+                icon: const Icon(Icons.add, size: 40.0),
+                onPressed: () => controller.addTapped(context),
+              ),
             ),
             Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 48.0),
